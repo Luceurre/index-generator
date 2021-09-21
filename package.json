@@ -1,0 +1,24 @@
+{
+  "name": "index-generator",
+  "version": "1.0.0",
+  "description": "a simple index.ts generator",
+  "main": "index.js",
+  "author": "Pierre Glandon <pglandon78@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "start": "tsc && node build/index.js",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.31.2",
+    "@typescript-eslint/parser": "^4.31.2",
+    "eslint": "^7.12.1",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "prettier": "^2.4.1",
+    "typescript": "^4.4.3"
+  }
+}
