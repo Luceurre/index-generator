@@ -27,6 +27,7 @@ export class IndexGenerator {
     if ((await this.doesIndexAlreadyExists(this.config.directory)) && !this.config.overwrite) {
       console.log('index already exists. Add --overwrite to replace existing index');
       process.exit();
+      return;
     }
     const sourceFiles = await this.getSourceFiles();
 
