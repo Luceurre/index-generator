@@ -99,7 +99,7 @@ export class IndexGenerator {
   }
 
   private getIndexFilename() {
-    return 'index.' + this.config.jsMode ? 'js' : 'ts';
+    return 'index.' + (this.config.jsMode ? 'js' : 'ts');
   }
 
   private formatIndex() {
@@ -111,7 +111,7 @@ export class IndexGenerator {
   }
 
   private executeCallback() {
-    if (this.config.callback) return;
+    if (this.config.callback === undefined) return;
     const callbackCommand = this.config.callback + ' ' + this.getIndexFilepath();
     try {
       execSync(callbackCommand);
