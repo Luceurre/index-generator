@@ -1,5 +1,6 @@
 import { fileStat } from './fileStat';
 
 export async function isDirectory(rootDir: string): Promise<boolean> {
-    return (await fileStat(rootDir)).isDirectory();
+  const stat = await fileStat(rootDir).catch(() => undefined);
+  return stat !== undefined && stat.isDirectory();
 }
