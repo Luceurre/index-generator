@@ -3,7 +3,7 @@
 import { Command } from 'commander';
 import { IndexGenerator, IndexGeneratorOptions } from './IndexGenerator';
 
-const program = new Command();
+const program = new Command('index-generator');
 program
   .version('0.0.1')
   .option('-d, --directory <path>', 'working directory')
