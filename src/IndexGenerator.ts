@@ -88,6 +88,7 @@ export class IndexGenerator {
   }
 
   private async writeIndex(indexLines: string[]) {
+    if (indexLines.length === 0) return;
     const indexString = indexLines.join('\n');
     const indexPath = this.getIndexFilepath();
     await writeFile(indexPath, indexString);
