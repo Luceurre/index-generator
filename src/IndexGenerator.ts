@@ -11,6 +11,7 @@ type IndexGeneratorConfig = {
   ignoreFileRegexes: RegExp[];
   jsMode: boolean;
   eslint: boolean;
+  callback?: string;
 };
 
 export type IndexGeneratorOptions = Partial<IndexGeneratorConfig>;
@@ -39,6 +40,7 @@ export class IndexGenerator {
     if (this.config.eslint) {
       this.formatIndex();
     }
+    this.executeCallback();
   }
 
   private static getIndexLineForFileWithExportDefault(file: string): string {
@@ -104,6 +106,16 @@ export class IndexGenerator {
       execSync(`eslint --fix ${this.getIndexFilepath()}`);
     } catch {
       console.error("Couldn't format index, are you sure that eslint is installed and available in path?");
+    }
+  }
+
+  private executeCallback() {
+    if (this.config.callback) return;
+    const callbackCommand = this.config.callback + ' ' + this.getIndexFilepath();
+    try {
+      execSync(callbackCommand);
+    } catch {
+      console.error(`Couldn't execute callback command: ${callbackCommand}.`);
     }
   }
 }
