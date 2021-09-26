@@ -38,6 +38,17 @@ Options:
   -h, --help              display help for command
 ```
 
+## Integration
+
+### Intellij
+
+In settings, External Tools, you can add it with the following config :
+- program: `index-generator`
+- arguments: `--overwrite --eslint --callback "prettier --write"` (you'll need eslint and prettier for this to work properly)
+- Working directory: `$FileDir$`  
+
+Don't forget to check `Synchronize file after execution` to refresh the index file in the IDE.
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
