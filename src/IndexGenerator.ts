@@ -45,7 +45,7 @@ export class IndexGenerator {
 
   private static getIndexLineForFileWithExportDefault(file: string): string {
     const moduleName = path.parse(file).name;
-    return `export { default as ${moduleName} } from './${moduleName}'`;
+    return `export { default as ${moduleName} } from './${moduleName}';`;
   }
 
   private static getIndexLineForFileWithAnyExport(file: string): string {
