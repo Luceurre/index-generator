@@ -8,8 +8,15 @@
   "private": false,
   "scripts": {
     "start": "tsc && node build/index.js",
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src/ --ext .js,.ts,.jsx,.tsx",
+    "format": "prettier --write src/",
+    "prepare": "npm run build",
+    "prepublishOnly" : "npm test && npm run lint",
+    "preversion" : "npm run lint"
   },
+  "files": ["dist/**/*"],
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.15.6",
@@ -19,6 +26,7 @@
     "@typescript-eslint/eslint-plugin": "^4.31.2",
     "@typescript-eslint/parser": "^4.31.2",
     "eslint": "^7.12.1",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
