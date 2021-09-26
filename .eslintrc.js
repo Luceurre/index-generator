@@ -1,9 +1,9 @@
 module.exports = {
   env: {
     node: true,
-    jest: true
+    jest: true,
   },
-  extends: ['eslint:recommended', 'eslint-config-prettier'],
+  extends: ['eslint:recommended'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 12,
@@ -11,8 +11,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {
-    quotes: ['error', 'single'],
     semi: ['error', 'always'],
-    'object-curly-spacing': ['error', 'always']
+    'object-curly-spacing': ['error', 'always'],
   },
 };
