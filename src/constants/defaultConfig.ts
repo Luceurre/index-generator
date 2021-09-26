@@ -6,4 +6,5 @@ export const DEFAULT_CONFIG = {
   overwrite: false,
   ignoreFileRegexes: IGNORE_FILE_REGEXES,
   jsMode: false,
+  eslint: false,
 };

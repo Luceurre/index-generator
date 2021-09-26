@@ -2,6 +2,7 @@ import { getFilePathsMatching, getFilesContaining } from './utils';
 import { ANY_EXPORT_REGEX_STRING, EXPORT_DEFAULT_REGEX_STRING, INDEX_REGEX, DEFAULT_CONFIG } from './constants';
 import path from 'path';
 import { writeFile } from 'fs/promises';
+import { execSync } from 'child_process';
 
 type IndexGeneratorConfig = {
   verbose: boolean;
@@ -9,6 +10,7 @@ type IndexGeneratorConfig = {
   overwrite: boolean;
   ignoreFileRegexes: RegExp[];
   jsMode: boolean;
+  eslint: boolean;
 };
 
 export type IndexGeneratorOptions = Partial<IndexGeneratorConfig>;
@@ -33,6 +35,10 @@ export class IndexGenerator {
     const indexLines = this.getIndexLines(filesWithAnyExport, filesWithExportDefault);
 
     await this.writeIndex(indexLines);
+
+    if (this.config.eslint) {
+      this.formatIndex();
+    }
   }
 
   private static getIndexLineForFileWithExportDefault(file: string): string {
@@ -81,11 +87,23 @@ export class IndexGenerator {
 
   private async writeIndex(indexLines: string[]) {
     const indexString = indexLines.join('\n');
-    const indexPath = path.join(this.config.directory, this.getIndexFilename());
+    const indexPath = this.getIndexFilepath();
     await writeFile(indexPath, indexString);
+  }
+
+  private getIndexFilepath() {
+    return path.join(this.config.directory, this.getIndexFilename());
   }
 
   private getIndexFilename() {
     return 'index.' + this.config.jsMode ? 'js' : 'ts';
+  }
+
+  private formatIndex() {
+    try {
+      execSync(`eslint --fix ${this.getIndexFilepath()}`);
+    } catch {
+      console.error("Couldn't format index, are you sure that eslint is installed and available in path?");
+    }
   }
 }

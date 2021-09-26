@@ -10,6 +10,7 @@ program
   .option('-v, --verbose', 'verbose')
   .option('--overwrite', 'overwrite existing index')
   .option('--jsMode', 'create an index.js instead of index.ts')
+  .option('--eslint', 'run eslint on index file after generation')
   .parse();
 
 const indexGenerator = new IndexGenerator(program.opts<IndexGeneratorOptions>());
