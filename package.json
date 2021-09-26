@@ -1,6 +1,6 @@
 {
   "name": "js-index-generator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a simple index generator for js/ts project with ESM modules",
   "main": "index.js",
   "author": "Pierre Glandon <pglandon78@gmail.com>",
@@ -13,10 +13,12 @@
     "lint": "eslint src/ --ext .js,.ts,.jsx,.tsx",
     "format": "prettier --write src/",
     "prepare": "npm run build",
-    "prepublishOnly" : "npm test && npm run lint",
-    "preversion" : "npm run lint"
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint"
   },
-  "files": ["dist/**/*"],
+  "files": [
+    "dist/**/*"
+  ],
   "bin": {
     "index-generator": "./dist/index.js"
   },
