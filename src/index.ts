@@ -9,6 +9,7 @@ program
   .option('-d, --directory <path>', 'working directory')
   .option('-v, --verbose', 'verbose')
   .option('--overwrite', 'overwrite existing index')
+  .option('--jsMode', 'create an index.js instead of index.ts')
   .parse();
 
 const indexGenerator = new IndexGenerator(program.opts<IndexGeneratorOptions>());

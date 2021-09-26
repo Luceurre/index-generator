@@ -8,6 +8,7 @@ type IndexGeneratorConfig = {
   directory: string;
   overwrite: boolean;
   ignoreFileRegexes: RegExp[];
+  jsMode: boolean;
 };
 
 export type IndexGeneratorOptions = Partial<IndexGeneratorConfig>;
@@ -80,7 +81,11 @@ export class IndexGenerator {
 
   private async writeIndex(indexLines: string[]) {
     const indexString = indexLines.join('\n');
-    const indexPath = path.join(this.config.directory, 'index.ts');
+    const indexPath = path.join(this.config.directory, this.getIndexFilename());
     await writeFile(indexPath, indexString);
+  }
+
+  private getIndexFilename() {
+    return 'index.' + this.config.jsMode ? 'js' : 'ts';
   }
 }
