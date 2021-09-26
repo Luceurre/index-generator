@@ -20,7 +20,7 @@ export class IndexGenerator {
     this.config = this.buildIndexGeneratorConfig(options);
   }
 
-  public async generateIndex() {
+  public async generateIndex(): Promise<void> {
     if ((await this.doesIndexAlreadyExists(this.config.directory)) && !this.config.overwrite) {
       console.log('index already exists. Add --overwrite to replace existing index');
       process.exit();
