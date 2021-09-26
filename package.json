@@ -1,5 +1,5 @@
 {
-  "name": "index-generator",
+  "name": "js-index-generator",
   "version": "1.0.0",
   "description": "a simple index generator for js/ts project with ESM modules",
   "main": "index.js",
