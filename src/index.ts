@@ -2,10 +2,11 @@
 
 import { Command } from 'commander';
 import { IndexGenerator, IndexGeneratorOptions } from './IndexGenerator';
+const version = require('../package.json').version;
 
 const program = new Command('index-generator');
 program
-  .version('0.0.1')
+  .version(version)
   .option('-d, --directory <path>', 'working directory')
   .option('-v, --verbose', 'verbose')
   .option('--overwrite', 'overwrite existing index')
