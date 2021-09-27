@@ -78,4 +78,16 @@ describe('IndexGenerator', function () {
       return accessSync(path.join(directory, 'index.ts'));
     }).rejects.toBeDefined();
   });
+  it('should reexport submodules if reexportSubmodules option is true', async function () {
+    const directory = path.join(FIXTURES_BASE_DIR, 'directory_with_files');
+    await deleteIndex(directory);
+
+    const indexGenerator = new IndexGenerator({ directory, reexportSubmodules: true });
+    await indexGenerator.generateIndex();
+
+    const resultFile = await readFile(path.join(directory, 'index.ts'));
+    expect(resultFile.toString().trim()).toStrictEqual(
+      "export * from './Component';\nexport * from './submodule';\nexport { default as Component } from './Component';",
+    );
+  });
 });

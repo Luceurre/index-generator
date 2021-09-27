@@ -28,14 +28,15 @@ You can see more advanced options with `--help`:
 Usage: index-generator [options]
 
 Options:
-  -V, --version           output the version number
-  -d, --directory <path>  working directory
-  -v, --verbose           verbose
-  --overwrite             overwrite existing index
-  --jsMode                create an index.js instead of index.ts
-  --eslint                run eslint on index file after generation
-  --callback <command>    run COMMAND with index path as last argument
-  -h, --help              display help for command
+  -V, --version             output the version number
+  -d, --directory <path>    working directory
+  -v, --verbose             verbose
+  --overwrite               overwrite existing index
+  --jsMode                  create an index.js instead of index.ts
+  --eslint                  run eslint on index file after generation
+  --callback <command>      run COMMAND with index path as last argument
+  -s, --reexportSubmodules  treats directories with index file as ts/js file
+  -h, --help                display help for command
 ```
 
 ## Integration

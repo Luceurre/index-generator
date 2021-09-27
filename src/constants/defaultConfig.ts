@@ -7,4 +7,5 @@ export const DEFAULT_CONFIG = {
   ignoreFileRegexes: IGNORE_FILE_REGEXES,
   jsMode: false,
   eslint: false,
+  reexportSubmodules: false,
 };

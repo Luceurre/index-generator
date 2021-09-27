@@ -1,5 +1,11 @@
-import { getFilePathsMatching, getFilesContaining } from './utils';
-import { ANY_EXPORT_REGEX_STRING, EXPORT_DEFAULT_REGEX_STRING, INDEX_REGEX, DEFAULT_CONFIG } from './constants';
+import { getDirectoriesContaining, getFilePathsMatching, getFilesContaining } from './utils';
+import {
+  ANY_EXPORT_REGEX_STRING,
+  DEFAULT_CONFIG,
+  EXPORT_DEFAULT_REGEX_STRING,
+  INDEX_REGEX,
+  TS_JS_FILE_REGEX,
+} from './constants';
 import path from 'path';
 import { writeFile } from 'fs/promises';
 import { execSync } from 'child_process';
@@ -12,6 +18,7 @@ type IndexGeneratorConfig = {
   jsMode: boolean;
   eslint: boolean;
   callback?: string;
+  reexportSubmodules: boolean;
 };
 
 export type IndexGeneratorOptions = Partial<IndexGeneratorConfig>;
@@ -34,6 +41,11 @@ export class IndexGenerator {
     const filteredFiles = this.filterIgnoredFiles(sourceFiles);
     const filesWithAnyExport = await this.extractFilesWithAnyExport(filteredFiles);
     const filesWithExportDefault = await this.extractFilesWithDefaultExport(filesWithAnyExport);
+
+    if (this.config.reexportSubmodules) {
+      (await this.getSubmodules()).forEach((submodule) => filesWithAnyExport.push(submodule));
+    }
+
     const indexLines = this.getIndexLines(filesWithAnyExport, filesWithExportDefault);
 
     await this.writeIndex(indexLines);
@@ -58,8 +70,12 @@ export class IndexGenerator {
     return Object.assign({}, DEFAULT_CONFIG, options);
   };
 
+  private getSubmodules = async () => {
+    return await getDirectoriesContaining(INDEX_REGEX, this.config.directory);
+  };
+
   private getSourceFiles = async () => {
-    return await getFilePathsMatching(/\.tsx?/, this.config.directory);
+    return await getFilePathsMatching(TS_JS_FILE_REGEX, this.config.directory);
   };
 
   private filterIgnoredFiles = (files: string[]) => {

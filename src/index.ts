@@ -13,6 +13,7 @@ program
   .option('--jsMode', 'create an index.js instead of index.ts')
   .option('--eslint', 'run eslint on index file after generation')
   .option('--callback <command>', 'run COMMAND with index path as last argument')
+  .option('-s, --reexportSubmodules', 'treats directories with index file as ts/js file')
   .parse();
 
 const indexGenerator = new IndexGenerator(program.opts<IndexGeneratorOptions>());
