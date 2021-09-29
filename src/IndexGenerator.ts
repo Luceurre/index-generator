@@ -65,11 +65,15 @@ export class IndexGenerator {
     }
     this.executeCallback();
     if (this.config.git) {
-      try {
-        execSync(`git add ${this.getIndexFilepath()}`);
-      } catch {
-        console.error("Couldn't add file to git. Are you in a git repository ?");
-      }
+      this.addIndexToGit();
+    }
+  }
+
+  private addIndexToGit() {
+    try {
+      execSync(`git add ${this.getIndexFilepath()}`);
+    } catch {
+      console.error("Couldn't add file to git. Are you in a git repository ?");
     }
   }
 
