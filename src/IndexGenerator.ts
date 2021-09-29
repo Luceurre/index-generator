@@ -41,12 +41,18 @@ export class IndexGenerator {
     const filteredFiles = this.filterIgnoredFiles(sourceFiles);
     const filesWithAnyExport = await this.extractFilesWithAnyExport(filteredFiles);
     const filesWithExportDefault = await this.extractFilesWithDefaultExport(filesWithAnyExport);
+    const filesWithExport = getFilesContaining(
+      '^export\\s+default\\s',
+      filesWithAnyExport,
+      this.config.directory,
+      true,
+    );
 
     if (this.config.reexportSubmodules) {
-      (await this.getSubmodules()).forEach((submodule) => filesWithAnyExport.push(submodule));
+      (await this.getSubmodules()).forEach((submodule) => filesWithExport.push(submodule));
     }
 
-    const indexLines = this.getIndexLines(filesWithAnyExport, filesWithExportDefault);
+    const indexLines = this.getIndexLines(filesWithExport, filesWithExportDefault);
 
     await this.writeIndex(indexLines);
 

@@ -39,11 +39,9 @@ describe('IndexGenerator', function () {
     await indexGenerator.generateIndex();
 
     const resultFile = await readFile(path.join(directory, 'index.ts'));
-    expect(resultFile.toString().trim()).toStrictEqual(
-      "export * from './Component';\nexport { default as Component } from './Component';",
-    );
+    expect(resultFile.toString().trim()).toStrictEqual("export { default as Component } from './Component';");
   });
-  it('should generate index', async function () {
+  it('should generate index without unnecessary export lines', async function () {
     const directory = path.join(FIXTURES_BASE_DIR, 'directory_with_files');
     await deleteIndex(directory);
 
@@ -51,9 +49,7 @@ describe('IndexGenerator', function () {
     await indexGenerator.generateIndex();
 
     const resultFile = await readFile(path.join(directory, 'index.ts'));
-    expect(resultFile.toString().trim()).toStrictEqual(
-      "export * from './Component';\nexport { default as Component } from './Component';",
-    );
+    expect(resultFile.toString().trim()).toStrictEqual("export { default as Component } from './Component';");
   });
   it('should generate index.js if jsMode is true', async function () {
     const directory = path.join(FIXTURES_BASE_DIR, 'directory_with_files');
@@ -63,9 +59,7 @@ describe('IndexGenerator', function () {
     await indexGenerator.generateIndex();
 
     const resultFile = await readFile(path.join(directory, 'index.js'));
-    expect(resultFile.toString().trim()).toStrictEqual(
-      "export * from './Component';\nexport { default as Component } from './Component';",
-    );
+    expect(resultFile.toString().trim()).toStrictEqual("export { default as Component } from './Component';");
   });
   it('should call callback function after generation', async function () {
     const directory = path.join(FIXTURES_BASE_DIR, 'directory_with_files');
@@ -87,7 +81,19 @@ describe('IndexGenerator', function () {
 
     const resultFile = await readFile(path.join(directory, 'index.ts'));
     expect(resultFile.toString().trim()).toStrictEqual(
-      "export * from './Component';\nexport * from './submodule';\nexport { default as Component } from './Component';",
+      "export * from './submodule';\nexport { default as Component } from './Component';",
+    );
+  });
+  it('should generate export and export default lines if needed', async function () {
+    const directory = path.join(FIXTURES_BASE_DIR, 'directory_export_and_export_default');
+    await deleteIndex(directory);
+
+    const indexGenerator = new IndexGenerator({ directory });
+    await indexGenerator.generateIndex();
+
+    const resultFile = await readFile(path.join(directory, 'index.ts'));
+    expect(resultFile.toString().trim()).toStrictEqual(
+      "export * from './Component';\nexport { default as Component } from './Component';",
     );
   });
 });

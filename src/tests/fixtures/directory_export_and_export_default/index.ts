@@ -1,2 +1,2 @@
-export * from './submodule';
+export * from './Component';
 export { default as Component } from './Component';
