@@ -8,4 +8,5 @@ export const DEFAULT_CONFIG = {
   jsMode: false,
   eslint: false,
   reexportSubmodules: false,
+  recursive: false,
 };

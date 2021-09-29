@@ -96,4 +96,20 @@ describe('IndexGenerator', function () {
       "export * from './Component';\nexport { default as Component } from './Component';",
     );
   });
+  it('should generate index recursively when recursive is true', async function () {
+    const directory = path.join(FIXTURES_BASE_DIR, 'directory_with_recursive_directory');
+    const subdirectory = path.join(directory, 'subdirectory');
+
+    await deleteIndex(directory);
+    await deleteIndex(subdirectory);
+
+    const indexGenerator = new IndexGenerator({ directory, recursive: true });
+    await indexGenerator.generateIndex();
+
+    const resultDirectoryIndex = await readFile(path.join(directory, 'index.ts'));
+    const resultSubdirectoryIndex = await readFile(path.join(subdirectory, 'index.ts'));
+
+    expect(resultDirectoryIndex.toString().trim()).toStrictEqual("export * from './foo';");
+    expect(resultSubdirectoryIndex.toString().trim()).toStrictEqual("export { default as bar } from './bar';");
+  });
 });

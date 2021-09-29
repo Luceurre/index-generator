@@ -19,6 +19,7 @@ type IndexGeneratorConfig = {
   eslint: boolean;
   callback?: string;
   reexportSubmodules: boolean;
+  recursive: boolean;
 };
 
 export type IndexGeneratorOptions = Partial<IndexGeneratorConfig>;
@@ -31,6 +32,17 @@ export class IndexGenerator {
   }
 
   public async generateIndex(): Promise<void> {
+    if (this.config.recursive) {
+      const subdirectories = await getDirectoriesContaining(/.*/, this.config.directory);
+      subdirectories.forEach((subdirectory) => {
+        const subdirectoryIndexGenerator = new IndexGenerator({
+          ...this.config,
+          directory: subdirectory,
+        });
+        subdirectoryIndexGenerator.generateIndex();
+      });
+    }
+
     if ((await this.doesIndexAlreadyExists(this.config.directory)) && !this.config.overwrite) {
       console.log('index already exists. Add --overwrite to replace existing index');
       process.exit();

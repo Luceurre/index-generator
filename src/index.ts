@@ -14,6 +14,10 @@ program
   .option('--eslint', 'run eslint on index file after generation')
   .option('--callback <command>', 'run COMMAND with index path as last argument')
   .option('-s, --reexportSubmodules', 'treats directories with index file as ts/js file')
+  .option(
+    '-r, --recursive',
+    "generate index recursively by doing a DFS (can be used with --reexportSubmodules). It doesn't stop on empty directory.",
+  )
   .parse();
 
 const indexGenerator = new IndexGenerator(program.opts<IndexGeneratorOptions>());
