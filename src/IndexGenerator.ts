@@ -36,12 +36,7 @@ export class IndexGenerator {
       process.exit();
       return;
     }
-    const sourceFiles = await this.getSourceFiles();
-
-    const filteredFiles = this.filterIgnoredFiles(sourceFiles);
-    const filesWithAnyExport = this.extractFilesWithAnyExport(filteredFiles);
-    const filesWithExportDefault = this.extractFilesWithExportDefault(filesWithAnyExport);
-    const filesWithExport = this.extractFilesWithExport(filesWithAnyExport);
+    const { filesWithExportDefault, filesWithExport } = await this.extractFiles();
 
     if (this.config.reexportSubmodules) {
       (await this.getSubmodules()).forEach((submodule) => filesWithExport.push(submodule));
@@ -55,6 +50,16 @@ export class IndexGenerator {
       this.formatIndex();
     }
     this.executeCallback();
+  }
+
+  private async extractFiles() {
+    const sourceFiles = await this.getSourceFiles();
+    const filteredFiles = this.filterIgnoredFiles(sourceFiles);
+    const filesWithAnyExport = this.extractFilesWithAnyExport(filteredFiles);
+    const filesWithExportDefault = this.extractFilesWithExportDefault(filesWithAnyExport);
+    const filesWithExport = this.extractFilesWithExport(filesWithAnyExport);
+
+    return { filesWithExportDefault, filesWithExport };
   }
 
   private extractFilesWithExport(filesWithAnyExport: string[]) {
