@@ -19,4 +19,10 @@ describe('getFilesContaining', function () {
       'AandB.txt',
     ]);
   });
+  it('should return files not matching regex if notMatching is true', function () {
+    expect(getFilesContaining('A', ['A.txt', 'B.txt', 'AandB.txt'], FIXTURES_BASE_DIR, true)).toStrictEqual([
+      'B.txt',
+      'AandB.txt',
+    ]);
+  });
 });
