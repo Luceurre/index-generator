@@ -59,7 +59,10 @@ export class IndexGenerator {
     const indexLines = this.getIndexLines(filesWithExport, filesWithExportDefault);
 
     await this.writeIndex(indexLines);
+    this.afterGenerationActions();
+  }
 
+  private afterGenerationActions() {
     if (this.config.eslint) {
       this.formatIndex();
     }
