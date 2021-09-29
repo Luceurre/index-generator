@@ -1,6 +1,6 @@
 {
   "name": "js-index-generator",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "a simple index generator for js/ts project with ESM modules",
   "main": "index.js",
   "author": "Pierre Glandon <pglandon78@gmail.com>",
