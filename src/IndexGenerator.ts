@@ -66,7 +66,10 @@ export class IndexGenerator {
     if (this.config.eslint) {
       this.formatIndex();
     }
-    this.executeCallback();
+    if (this.config.callback) {
+      this.executeCallback(this.config.callback, "Couldn't execute callback command.");
+    }
+
     if (this.config.git) {
       this.addIndexToGit();
     }
@@ -167,13 +170,12 @@ export class IndexGenerator {
     }
   }
 
-  private executeCallback() {
-    if (this.config.callback === undefined) return;
-    const callbackCommand = this.config.callback + ' ' + this.getIndexFilepath();
+  private executeCallback(command: string, error: string) {
+    const callbackCommand = command + ' ' + this.getIndexFilepath();
     try {
       execSync(callbackCommand);
     } catch {
-      console.error(`Couldn't execute callback command: ${callbackCommand}.`);
+      console.error(error);
     }
   }
 }
