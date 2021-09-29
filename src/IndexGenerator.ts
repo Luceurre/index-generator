@@ -25,7 +25,7 @@ type IndexGeneratorConfig = {
 export type IndexGeneratorOptions = Partial<IndexGeneratorConfig>;
 
 export class IndexGenerator {
-  private config: IndexGeneratorConfig;
+  private readonly config: IndexGeneratorConfig;
 
   constructor(options: IndexGeneratorOptions) {
     this.config = this.buildIndexGeneratorConfig(options);
