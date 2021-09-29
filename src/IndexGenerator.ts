@@ -40,7 +40,7 @@ export class IndexGenerator {
 
     const filteredFiles = this.filterIgnoredFiles(sourceFiles);
     const filesWithAnyExport = this.extractFilesWithAnyExport(filteredFiles);
-    const filesWithExportDefault = this.extractFilesWithDefaultExport(filesWithAnyExport);
+    const filesWithExportDefault = this.extractFilesWithExportDefault(filesWithAnyExport);
     const filesWithExport = this.extractFilesWithExport(filesWithAnyExport);
 
     if (this.config.reexportSubmodules) {
@@ -58,12 +58,7 @@ export class IndexGenerator {
   }
 
   private extractFilesWithExport(filesWithAnyExport: string[]) {
-    return getFilesContaining(
-      '^export\\s+default\\s',
-      filesWithAnyExport,
-      this.config.directory,
-      true,
-    );
+    return getFilesContaining('^export\\s+default\\s', filesWithAnyExport, this.config.directory, true);
   }
 
   private static getIndexLineForFileWithExportDefault(file: string): string {
@@ -96,7 +91,7 @@ export class IndexGenerator {
     return getFilesContaining(ANY_EXPORT_REGEX_STRING, files, this.config.directory);
   };
 
-  private extractFilesWithDefaultExport = (files: string[]) => {
+  private extractFilesWithExportDefault = (files: string[]) => {
     return getFilesContaining(EXPORT_DEFAULT_REGEX_STRING, files, this.config.directory);
   };
 
