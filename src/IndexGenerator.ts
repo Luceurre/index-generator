@@ -20,6 +20,7 @@ type IndexGeneratorConfig = {
   callback?: string;
   reexportSubmodules: boolean;
   recursive: boolean;
+  git: boolean;
 };
 
 export type IndexGeneratorOptions = Partial<IndexGeneratorConfig>;
@@ -63,6 +64,13 @@ export class IndexGenerator {
       this.formatIndex();
     }
     this.executeCallback();
+    if (this.config.git) {
+      try {
+        execSync(`git add ${this.getIndexFilepath()}`);
+      } catch {
+        console.error("Couldn't add file to git. Are you in a git repository ?");
+      }
+    }
   }
 
   private async extractFiles() {

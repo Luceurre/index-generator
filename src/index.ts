@@ -18,6 +18,7 @@ program
     '-r, --recursive',
     "generate index recursively by doing a DFS (can be used with --reexportSubmodules). It doesn't stop on empty directory.",
   )
+  .option('-g, --git', 'add file to git')
   .parse();
 
 const indexGenerator = new IndexGenerator(program.opts<IndexGeneratorOptions>());

@@ -9,4 +9,5 @@ export const DEFAULT_CONFIG = {
   eslint: false,
   reexportSubmodules: false,
   recursive: false,
+  git: false,
 };
