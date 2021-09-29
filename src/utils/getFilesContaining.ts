@@ -2,6 +2,7 @@ import { execSync } from 'child_process';
 
 const grepCommandBuilder = (regex: string, filePaths: string[], notMatching: boolean = false) => {
   const filePathListInlined = filePaths.join(' ');
+
   return `grep -lEs ${notMatching ? '-v' : ''} '${regex}' ${filePathListInlined} || true`;
 };
 

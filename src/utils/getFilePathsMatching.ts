@@ -10,5 +10,6 @@ export const getFilePathsMatching = async (regex: RegExp, workingDirectory: stri
       result.push(folderItem);
     }
   }
+
   return result;
 };

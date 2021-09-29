@@ -11,5 +11,6 @@ export const getDirectoriesContaining = async (regex: RegExp, workingDirectory: 
       result.push(folderItem);
     }
   }
+
   return result;
 };

@@ -13,5 +13,6 @@ module.exports = {
   rules: {
     semi: ['error', 'always'],
     'object-curly-spacing': ['error', 'always'],
+    'newline-before-return': ['error'],
   },
 };
