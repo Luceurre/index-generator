@@ -76,11 +76,7 @@ export class IndexGenerator {
   }
 
   private addIndexToGit() {
-    try {
-      execSync(`git add ${this.getIndexFilepath()}`);
-    } catch {
-      console.error("Couldn't add file to git. Are you in a git repository ?");
-    }
+    this.executeCallback('git add', "Couldn't add file to git. Are you in a git repository ?");
   }
 
   private async extractFiles() {
@@ -163,11 +159,10 @@ export class IndexGenerator {
   }
 
   private formatIndex() {
-    try {
-      execSync(`eslint --fix ${this.getIndexFilepath()}`);
-    } catch {
-      console.error("Couldn't format index, are you sure that eslint is installed and available in path?");
-    }
+    this.executeCallback(
+      'eslint --fix',
+      "Couldn't format index, are you sure that eslint is installed and available in path?",
+    );
   }
 
   private executeCallback(command: string, error: string) {
