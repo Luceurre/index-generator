@@ -39,8 +39,8 @@ export class IndexGenerator {
     const sourceFiles = await this.getSourceFiles();
 
     const filteredFiles = this.filterIgnoredFiles(sourceFiles);
-    const filesWithAnyExport = await this.extractFilesWithAnyExport(filteredFiles);
-    const filesWithExportDefault = await this.extractFilesWithDefaultExport(filesWithAnyExport);
+    const filesWithAnyExport = this.extractFilesWithAnyExport(filteredFiles);
+    const filesWithExportDefault = this.extractFilesWithDefaultExport(filesWithAnyExport);
     const filesWithExport = getFilesContaining(
       '^export\\s+default\\s',
       filesWithAnyExport,
@@ -88,11 +88,11 @@ export class IndexGenerator {
     return files.filter((file) => !this.config.ignoreFileRegexes.some((regex) => regex.test(file)));
   };
 
-  private extractFilesWithAnyExport = async (files: string[]) => {
+  private extractFilesWithAnyExport = (files: string[]) => {
     return getFilesContaining(ANY_EXPORT_REGEX_STRING, files, this.config.directory);
   };
 
-  private extractFilesWithDefaultExport = async (files: string[]) => {
+  private extractFilesWithDefaultExport = (files: string[]) => {
     return getFilesContaining(EXPORT_DEFAULT_REGEX_STRING, files, this.config.directory);
   };
 
